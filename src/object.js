@@ -44,8 +44,11 @@
 JsMockito.mock = function(Obj, delegate) {
   delegate = delegate || {};
 
+  var IntermediateObj = function() { };
+  IntermediateObj.prototype = Obj.prototype;
+
   var MockObject = function() { };
-  MockObject.prototype = (typeof Obj == "function")? new Obj : Obj;
+  MockObject.prototype = (typeof Obj == "function")? new IntermediateObj : Obj;
   MockObject.prototype.constructor = MockObject;
 
   var mockObject = new MockObject();
